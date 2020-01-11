@@ -1,4 +1,4 @@
-import * as web from "./web";
+import * as web from "./web/web";
 
 const port: number = 8080;
 

@@ -1,0 +1,8 @@
+[
+    {
+        "name":"somebody",
+        "price": 15,
+        "specialPrice": 13,
+        "description": "description"
+    }
+]

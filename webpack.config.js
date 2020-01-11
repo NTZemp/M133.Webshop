@@ -25,7 +25,8 @@ module.exports = {
     plugins: [
         new CopyPlugin([
             "public/index.html",
-            { from: "public/img", to: "img" }
+            { from: "public/img", to: "img" },
+            { from: "public/productPictures", to: "img/products" }
         ])
     ],
 

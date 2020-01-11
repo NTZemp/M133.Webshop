@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './branding.css';
+import './branding.style.css';
 
 export default function Branding() {
     return (

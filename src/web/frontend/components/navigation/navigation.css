@@ -1,9 +1,23 @@
-nav{
-    height: 30px;
+ul {
+  list-style-type: none;
+  padding: 8px;
+  border-bottom: 1px solid  #AAB3AC;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-ul{
-    list-style: none;
+
+.branding{
+  flex: 0 0 auto;
 }
-li{
-    text-decoration: none;
+
+.shoppingCartPreview{
+  flex: 1 1 auto;
+  text-align: right;
+  vertical-align: middle;
 }
+
+li a {
+  text-decoration: none;
+}
+
