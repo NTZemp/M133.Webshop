@@ -1,12 +1,25 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Branding from '../Branding/Branding';
 import ShoppingCartPreview from '../shoppingCartPreview/shoppingCartPreview';
 
 import './navigation.css'
 
-export default class Navigation extends React.Component {
+export class Navigation extends React.Component<RouteComponentProps> {
+
+    constructor(props: Readonly<RouteComponentProps>){
+        super(props)
+
+    }
     render (){
+        let shoppingCartPreview;
+        if(!(this.props.location.pathname.endsWith("shoppingCart"))){
+            shoppingCartPreview =    <li className='shoppingCartPreview'>
+                                         <ShoppingCartPreview/>
+                                     </li>
+        }else{
+           shoppingCartPreview =  <div></div>
+        }
         return(
             <ul >
                 <li className='branding'>
@@ -14,12 +27,10 @@ export default class Navigation extends React.Component {
                         <Branding/>
                     </Link>
                 </li>
-                <li className='shoppingCartPreview'>
-                    <Link to='/shoppingCart'>
-                        <ShoppingCartPreview/>
-                    </Link>
-                </li>
+                {shoppingCartPreview}
             </ul>
         );
     }
 }
+
+export default withRouter(Navigation);

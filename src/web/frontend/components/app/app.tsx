@@ -8,6 +8,7 @@ import './app.style.css'
 import Product from '../../../../lib/products'
 import AppState from './AppState'
 import AppProperties from './AppProperties'
+import ProductDetailView from '../productDetailView/productDetailView'
 
 export default class app extends React.Component<AppProperties, AppState> {
   //https://www.freecodecamp.org/forum/t/returning-a-promise-value-from-fetch/200229/2
@@ -16,8 +17,11 @@ export default class app extends React.Component<AppProperties, AppState> {
     this.state =  {products:[]};
   }
 
-  render(){
+  componentDidMount(){
     this.getProducts();
+  }
+
+  render(){
     return (
     <div className='app-container'>
       <header>
@@ -30,6 +34,9 @@ export default class app extends React.Component<AppProperties, AppState> {
           </Route>
           <Route path='/shoppingCart'>
             <ShoppingCart/>
+          </Route>
+          <Route path='/products/:id'>
+            <ProductDetailView/>
           </Route>
         </Switch>
       </main>

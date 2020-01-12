@@ -1,8 +1,41 @@
 [
     {
+        "id":1,
+        "name":"somebody",
+        "price": 15,
+        "description": "description",
+        "imageName":"somebody.PNG"
+    },
+    {
+        "id":2,
+        "name":"abstract",
+        "price": 15,
+        "specialPrice": 13,
+        "description": "description",
+        "imageName":"abstract.png"
+    },
+    {
+        "id":3,
+        "name":"Fruit Ninja",
+        "price": 15,
+        "specialPrice": 13,
+        "description": "description",
+        "imageName":"fruit_ninja.png"
+    },
+    {
+        "id":4,
+        "name":"Unit of measurement",
+        "price": 15,
+        "specialPrice": 13,
+        "description": "description",
+        "imageName":"unit_of_measurement.png"
+    },
+    {
+        "id":5,
         "name":"somebody",
         "price": 15,
         "specialPrice": 13,
-        "description": "description"
+        "description": "description",
+        "imageName":"somebody.PNG"
     }
 ]
