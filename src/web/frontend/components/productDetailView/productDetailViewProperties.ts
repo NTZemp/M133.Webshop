@@ -1,3 +1,3 @@
 export default interface ProductDetailViewProperties {
-    onCartChange:any;
+    addToCart:any;
 }

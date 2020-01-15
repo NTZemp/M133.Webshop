@@ -3,6 +3,13 @@
   margin-right: 10%;
 }
 
+@media(width: 450){
+  #root{
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
 .icon{
   height: 20px;
 }

@@ -1,6 +1,7 @@
 import Product from './product';
 import ShoppingCartItem from './shoppingCartItem';
 import ShoppingCart from './shoppingCart';
+import Order from './order';
 
 export function parseProduct(product:Product): Product{
     var newProduct = new Product();
@@ -11,6 +12,13 @@ export function parseProduct(product:Product): Product{
     newProduct.price = product.price;
     newProduct.specialPrice = product.specialPrice;
     return newProduct;
+}
+export function parseOrder(order:Order){
+    let newOrder = new Order();
+    newOrder.email = order.email
+    newOrder.firstname = order.firstname;
+    newOrder.lastname = order.lastname;
+    return newOrder;
 }
 
 export function parseShoppinCartItem(shoppingCartItem: ShoppingCartItem):ShoppingCartItem{

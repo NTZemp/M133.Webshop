@@ -1,108 +1,89 @@
-import React, { Component } from 'react'
-import ShoppingCartModel from '../../../../lib/shoppingCart';
-import Product from '../../../../lib/product';
-import ShoppingCartProperties from './shoppingCartProperties';
-import ShoppingCartState from './shoppingCartState';
-import Price from '../price/price';
-import ShoppingCartItem from '../../../../lib/shoppingCartItem';
+import React, { Component } from "react";
+import ShoppingCartProperties from "./shoppingCartProperties";
+import ShoppingCartState from "./shoppingCartState";
+import "./shoppingCart.css";
+import { Link } from "react-router-dom";
 
-export default class ShoppingCart extends Component<ShoppingCartProperties,ShoppingCartState> {
+export default class ShoppingCart extends Component<
+  ShoppingCartProperties,
+  ShoppingCartState
+> {
+  constructor(props: Readonly<ShoppingCartProperties>) {
+    super(props);
+  }
 
-    constructor(props:Readonly<ShoppingCartProperties>){
-        super(props);
-        var state = new ShoppingCartState();
-        state.loading = false;
-        state.shoppingCart = new ShoppingCartModel();
-        this.state = state;
-        this.refreshCart = this.refreshCart.bind(this);
-        this.refreshCart();
+  render() {
+    let tableData;
+    tableData = (
+      <tbody>
+        {this.renderTableData()}
+        {this.totalRow()}
+      </tbody>
+    );
+    return (
+      <div>
+        {this.props.shoppingCart.items.length !== 0 ? (
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <td>Name</td>
+                  <td>Einzelpreis in CHF</td>
+                  <td></td>
+                  <td>Menge</td>
+                  <td></td>
+                  <td>Total</td>
+                </tr>
+              </thead>
+              {tableData}
+            </table>
+            <Link to="/checkout">Checkout</Link>
+          </div>
+        ) : (
+          <div>No Items in shoppingcart</div>
+        )}
+      </div>
+    );
+  }
+
+  totalRow() {
+    return (
+      <tr key={-99} id="total">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td align="right" id="totalPrice">
+          {this.props.shoppingCart.getTotal()}
+        </td>
+      </tr>
+    );
+  }
+
+  renderTableData() {
+    if (this.props.shoppingCart.items.length == 0) {
+      return;
     }
-
-    render(){
-        var getPrice = this.getPrice;
-        let productsList;
-       
-        
-        !this.state.loading ? (
-            productsList = this.state.shoppingCart.getAllItems().map(function(p:ShoppingCartItem, i:number){
-                return (
-                    <tr key={i} >
-                        <td>
-                            {p.product.name}
-                        </td>
-                        <td>
-                            <Price price={p.product.price} specialPrice={p.product.specialPrice}/>>
-                        </td>
-                        <td>
-                            <button>
-                                plus
-                            </button>
-                        </td>
-                        <td>
-                            {p.count}
-                        </td>
-                        <td>
-                            <button>
-                                Minus
-                            </button>
-                        </td>
-                        <td>
-                            {p.count * getPrice(p.product)}
-                        </td>
-                    </tr>
-                )
-            })): (
-            productsList = <div>Loading</div>
-          );
-        return (
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>
-                                Name
-                            </td>
-                            <td>
-                                Einzelpreis
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                Menge
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                Total
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {productsList}
-                    </tbody>
-                </table>
-            </div>
-        )
-    }
-
-    getPrice(product: Product){
-        if(product.specialPrice != null) {
-            return product.specialPrice;
-        }
-        return product.price;
-    }    
-
-    refreshCart(){
-        fetch('/api/shoppingCart')
-        .then(res => {
-            return res.json();
-        })
-        .then(cart =>{
-            this.setState({shoppingCart: cart});
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
-
+    return this.props.shoppingCart.items.map(item => {
+      return (
+        <tr key={item.product.id}>
+          <td>{item.product.name}</td>
+          <td>{item.product.getPrice()}</td>
+          <td>
+            <button onClick={() => this.props.addToCart(item.product.id)}>
+              +
+            </button>
+          </td>
+          <td>{item.count}</td>
+          <td>
+            <button onClick={() => this.props.removeFromCart(item.product.id)}>
+              -
+            </button>
+          </td>
+          <td align="right">{item.getTotal()}</td>
+        </tr>
+      );
+    });
+  }
 }

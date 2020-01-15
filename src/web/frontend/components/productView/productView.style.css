@@ -5,14 +5,12 @@
     border-radius: 10px;
 }
 
-#contentContainer{
-    
-}
+
+
 
 
 #pictureContainer{
     height:200px;
-    width:300;
     display: block;
     text-align: center;
 }
@@ -32,10 +30,10 @@
     border: 1px solid #ccc;
     background: #fff;
     float: left;
-    margin: 10px;
+    margin: 5px;
     text-decoration: none;
-    width: 250px;
-    height: 280px;
+    width: 300px;
+    height:max-content;
 }
 
 #productContainer:hover{

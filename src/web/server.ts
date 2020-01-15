@@ -3,19 +3,17 @@ import path from "path";
 import expressSession from "express-session";
 import Product from "../lib/product";
 import ShoppingCartModel from "../lib/shoppingCart";
-import AddProductRequest from "../lib/addProductRequest";
+import ProductRequest from "../lib/productRequest";
 import bodyParser from "body-parser";
 import session from "express-session";
 import ShoppingCartItem from "../lib/shoppingCartItem";
-import {parseProduct, parseShoppinCartItem, parseShoppinCart } from '../lib/parsers';
+import {parseProduct, parseShoppinCartItem, parseShoppinCart, parseOrder } from '../lib/parsers';
 var fs = require("fs");
 
 var data = fs.readFileSync("products.json", "utf8");
 var products: Product[] = JSON.parse(data);
 
 const app = express();
-
-const newShoppingCart = new ShoppingCartModel();
 
 
 app.use("/assets", express.static(path.join(__dirname, "frontend")));
@@ -55,12 +53,27 @@ app.get("/api/products/:id", (req, res) => {
   res.json(product);
 });
 
-app.post("/api/shoppingcart", jsonParser, (req, res) => {
+app.post("/api/shoppingcart/checkout",jsonParser,(req,res)=>{
+  if (!req.session!.shoppingCart) {
+    req.session!.shoppingCart= new ShoppingCartModel();
+    res.sendStatus(400);
+    return;
+  }
+  var order = parseOrder(req.body);
+  if(order.isValid()){
+    req.session!.shoppingCart = new ShoppingCartModel();
+    res.sendStatus(204);
+  }else{
+    res.sendStatus(400);
+  }
+  
+})
+
+app.post("/api/shoppingcart/items", jsonParser, (req, res) => {
   if (!req.session!.shoppingCart) {
     req.session!.shoppingCart = new ShoppingCartModel();
   }
-  let newProduct: AddProductRequest = req.body;
-  console.log(newProduct);
+  let newProduct: ProductRequest = req.body;
   var product = products.find(product => product.id == newProduct.id);
   if (product) {
     let cart: ShoppingCartModel = req.session!.shoppingCart;
@@ -72,6 +85,22 @@ app.post("/api/shoppingcart", jsonParser, (req, res) => {
     res.sendStatus(404);
   }
 });
+
+  app.delete("/api/shoppingcart/items", jsonParser, (req, res)=>{
+    if (!req.session!.shoppingCart) {
+      req.session!.shoppingCart = new ShoppingCartModel();
+    }
+    var product:ProductRequest = req.body;
+    var shoppingCart:ShoppingCartModel = parseShoppinCart(req.session!.shoppingCart)
+    try{
+      shoppingCart.remove(product.id);
+      req.session!.shoppingCart = shoppingCart;
+      res.sendStatus(204);
+    }catch(e){
+      res.write(e.message);
+      res.sendStatus(400);
+    }
+  })
 
 app.get("/api/shoppingcart", (req, res) => {
   if (!req.session!.shoppingCart) {

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Product from '../../../../lib/product';
-import AddProductRequest from  '../../../../lib/addProductRequest';
 import ProductDetailViewState from './productDetailViewState';
 import Price from '../price/price';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-
+import Toast from 'react-bootstrap/Toast'
 import './productDetailView.style.css';
 import ProductDetailViewProperties from './productDetailViewProperties';
 
@@ -12,11 +11,10 @@ class ProductDetailView extends Component<RouteComponentProps &ProductDetailView
 
     constructor(props: Readonly<RouteComponentProps &ProductDetailViewProperties>){
         super(props);
-        this.state = {product:new Product()}
+        this.state = {product:new Product(), showToast:false, toastMessage:""};
         var path = this.props.location.pathname;
         let id:number = this.getIdFromPath(path);
         //ES6 React.Component doesn't auto bind methods to itself. You need to bind them yourself in constructor.
-        this.addToCart = this.addToCart.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.getProduct(id);
         
@@ -34,31 +32,23 @@ class ProductDetailView extends Component<RouteComponentProps &ProductDetailView
                     <Price price={this.state.product.price} specialPrice={this.state.product.specialPrice} />
                     <button onClick={this.handleChange} id="addToCart"><img className="icon" src="/assets/img/addToCart.svg"/></button>   
                 </div>
+                <Toast show={this.state.showToast} onClose={() =>{return this.setState({showToast:false})} } autohide={true} delay={3000} animation={false}>
+                    <Toast.Body>{this.state.toastMessage}</Toast.Body>
+                </Toast>
+
             </div>
         )
     }
 
-    handleChange(){
-        this.addToCart();
-        this.props.onCartChange();
+    async handleChange(){
+        if(await this.props.addToCart(this.state.product.id)){
+            this.setState({toastMessage: "Added to Cart", showToast:true});
+        }else{
+            this.setState({toastMessage: "Couldn't add product to Cart", showToast:true});
+        }
     }
 
-    addToCart(){
-        var addProduct = new AddProductRequest(this.state.product.id);
-        console.log(JSON.stringify(addProduct));
-        fetch('/api/shoppingCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(addProduct)
-            })
-        .then(res =>{
-            if(res.ok){
-                
-            }
-        })
-    }
+    
 
     getProduct(id:number){
         fetch("/api/products/"+ id)

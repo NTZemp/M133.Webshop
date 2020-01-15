@@ -17,6 +17,18 @@ export default class ShoppingCartModel {
     }
   }
 
+  remove(id:number):void{
+    var item = this.items.find(x => x.product.id == id);
+    if(!item){
+      throw new Error('No product of type in Shopping Cart');
+    }
+    if(item.count == 1){
+      var index = this.items.indexOf(item);
+      this.items.splice(index ,1);
+    }else{
+      item.count--;
+    }
+  }
   getTotal(): number {
     let total: number = 0;
     this.items.forEach(item => {

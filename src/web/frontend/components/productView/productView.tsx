@@ -18,7 +18,7 @@ export default class ProductView extends Component<ProductViewProperties> {
         return (
             <div id="productContainer">
                 <Link id="link" to={productLink}>
-                    <div id="contentContainer">
+                    <div id="productContentContainer">
                         <div id="pictureContainer">
                             <img id="productPicture" src={imgSource} alt="Product Picture"/>
                         </div>

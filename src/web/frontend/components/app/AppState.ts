@@ -1,6 +1,7 @@
 import Product from "../../../../lib/product";
+import ShoppingCartModel from "../../../../lib/shoppingCart";
 
 export default interface AppState{
     products: Product[];
-    totalPrice:number;
+    shoppinCart:ShoppingCartModel;
 }
