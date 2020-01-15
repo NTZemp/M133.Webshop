@@ -1,6 +1,6 @@
 import * as server from "./web/server";
 
-const port: number = 8080;
+const port: number = 3333;
 
 async function main() {
   await server.start(port);

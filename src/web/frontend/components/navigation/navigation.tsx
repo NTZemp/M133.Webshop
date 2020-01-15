@@ -12,14 +12,6 @@ export class Navigation extends React.Component<RouteComponentProps> {
 
     }
     render (){
-        let shoppingCartPreview;
-        if(!(this.props.location.pathname.endsWith("shoppingCart"))){
-            shoppingCartPreview =    <li className='shoppingCartPreview'>
-                                         <ShoppingCartPreview/>
-                                     </li>
-        }else{
-           shoppingCartPreview =  <div></div>
-        }
         return(
             <ul >
                 <li className='branding'>
@@ -27,7 +19,8 @@ export class Navigation extends React.Component<RouteComponentProps> {
                         <Branding/>
                     </Link>
                 </li>
-                {shoppingCartPreview}
+                <li className='shoppingCartPreview'>
+                </li>
             </ul>
         );
     }
