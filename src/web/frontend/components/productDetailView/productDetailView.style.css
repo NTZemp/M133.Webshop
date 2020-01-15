@@ -1,10 +1,8 @@
-#image{
+#image {
     height: 300px;
 }
 
-
-
-#detailPageContainer{
+#detailPageContainer {
     max-width: min-content;
     max-height: max-content;
     display: flex;
@@ -12,8 +10,8 @@
     margin: 20px;
 }
 
-@media (max-width: 414px){
-    #detailPageContainer{
+@media (max-width: 414px) {
+    #detailPageContainer {
         max-width: min-content;
         max-height: max-content;
         display: flex;
@@ -22,15 +20,15 @@
         align-items: center;
     }
 
-    #contentContainer{
-        margin-left:0px !important;
+    #contentContainer {
+        margin-left: 0px !important;
     }
 }
 
-#addToCart{
+#addToCart {
     height: 30px;
 }
 
-#contentContainer{
+#contentContainer {
     margin-left: 20px;
 }

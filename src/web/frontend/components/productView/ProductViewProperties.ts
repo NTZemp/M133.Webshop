@@ -1,6 +1,5 @@
-import Product from '../../../../lib/product';
+import Product from "../../../../lib/product";
 
-
-export interface ProductViewProperties{
-    product:Product;
+export interface ProductViewProperties {
+  product: Product;
 }

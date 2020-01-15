@@ -1,7 +1,7 @@
-#productsContainer{
-    display:flex;
+#productsContainer {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    flex-grow:1;
+    flex-grow: 1;
     justify-content: space-around;
 }

@@ -1,3 +1,3 @@
 export default interface CheckoutProperties {
-    onCartChange:any;
+  onCartChange: any;
 }

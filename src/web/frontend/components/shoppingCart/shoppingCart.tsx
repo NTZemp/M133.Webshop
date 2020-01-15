@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import ShoppingCartProperties from "./shoppingCartProperties";
-import ShoppingCartState from "./shoppingCartState";
 import "./shoppingCart.css";
 import { Link } from "react-router-dom";
 
-export default class ShoppingCart extends Component<
-  ShoppingCartProperties,
-  ShoppingCartState
-> {
+export default class ShoppingCart extends Component<ShoppingCartProperties> {
   constructor(props: Readonly<ShoppingCartProperties>) {
     super(props);
   }

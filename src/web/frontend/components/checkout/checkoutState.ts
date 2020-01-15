@@ -1,5 +1,5 @@
 export default interface CheckoutState {
-    buttonDisabled:boolean;
-    showToast:boolean;
-    toastMessage:string;
+  buttonDisabled: boolean;
+  showToast: boolean;
+  toastMessage: string;
 }

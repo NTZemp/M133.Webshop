@@ -1,6 +1,6 @@
 export default class ShoppingCartPreviewProperties {
-    totalPriceInChf:number;
-    constructor(){
-        this.totalPriceInChf = 0;
-    }
+  totalPriceInChf: number;
+  constructor() {
+    this.totalPriceInChf = 0;
+  }
 }

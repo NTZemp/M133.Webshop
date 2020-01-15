@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-import './branding.style.css';
+import "./branding.style.css";
 
 export default function Branding() {
-    return (
-        <div>
-            <img src='/assets/img/logo.jpg' className='logo'/>
-        </div>
-    )
+  return (
+    <div>
+      <img src="/assets/img/logo.jpg" className="logo" />
+    </div>
+  );
 }
