@@ -4,6 +4,10 @@
     
 }
 
+Toast{
+  position: static;
+}
+
 header{
     margin: 0px;
 }

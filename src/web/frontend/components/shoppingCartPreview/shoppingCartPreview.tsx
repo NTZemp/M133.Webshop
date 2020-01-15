@@ -21,16 +21,5 @@ export default class ShoppingCartPreview extends React.Component<ShoppingCartPre
                 </Link>
             </div>
         )
-    }
-
-    componentDidMount(){
-        console.log('mount')
-    }
-
-
-    componentDidUpdate(){
-        console.log('update')
-    }
-
-    
+    }    
 }

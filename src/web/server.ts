@@ -7,14 +7,18 @@ import ProductRequest from "../lib/productRequest";
 import bodyParser from "body-parser";
 import session from "express-session";
 import ShoppingCartItem from "../lib/shoppingCartItem";
-import {parseProduct, parseShoppinCartItem, parseShoppinCart, parseOrder } from '../lib/parsers';
+import {
+  parseProduct,
+  parseShoppinCartItem,
+  parseShoppinCart,
+  parseOrder
+} from "../lib/parsers";
 var fs = require("fs");
 
 var data = fs.readFileSync("products.json", "utf8");
 var products: Product[] = JSON.parse(data);
 
 const app = express();
-
 
 app.use("/assets", express.static(path.join(__dirname, "frontend")));
 var jsonParser = bodyParser.json();
@@ -37,7 +41,7 @@ app.get("/api/shoppingCart/totalPrice", (req, res) => {
   if (!req.session!.shoppingCart) {
     req.session!.shoppingCart = new ShoppingCartModel();
   }
-  var  shoppingCart:ShoppingCartModel = req.session!.shoppingCart;
+  var shoppingCart: ShoppingCartModel = req.session!.shoppingCart;
   shoppingCart = parseShoppinCart(shoppingCart);
   let total = shoppingCart.getTotal();
   res.json({ totalPrice: total });
@@ -53,21 +57,24 @@ app.get("/api/products/:id", (req, res) => {
   res.json(product);
 });
 
-app.post("/api/shoppingcart/checkout",jsonParser,(req,res)=>{
+app.post("/api/shoppingcart/checkout", jsonParser, (req, res) => {
   if (!req.session!.shoppingCart) {
-    req.session!.shoppingCart= new ShoppingCartModel();
+    req.session!.shoppingCart = new ShoppingCartModel();
+    res.sendStatus(400);
+    return;
+  }else if(!req.session!.shoppingCart.items){
     res.sendStatus(400);
     return;
   }
   var order = parseOrder(req.body);
-  if(order.isValid()){
-    req.session!.shoppingCart = new ShoppingCartModel();
+  console.log(order);
+  if (order.isValid()) {
+    req.session!.shoppingCart = null;
     res.sendStatus(204);
-  }else{
+  } else {
     res.sendStatus(400);
   }
-  
-})
+});
 
 app.post("/api/shoppingcart/items", jsonParser, (req, res) => {
   if (!req.session!.shoppingCart) {
@@ -86,21 +93,23 @@ app.post("/api/shoppingcart/items", jsonParser, (req, res) => {
   }
 });
 
-  app.delete("/api/shoppingcart/items", jsonParser, (req, res)=>{
-    if (!req.session!.shoppingCart) {
-      req.session!.shoppingCart = new ShoppingCartModel();
-    }
-    var product:ProductRequest = req.body;
-    var shoppingCart:ShoppingCartModel = parseShoppinCart(req.session!.shoppingCart)
-    try{
-      shoppingCart.remove(product.id);
-      req.session!.shoppingCart = shoppingCart;
-      res.sendStatus(204);
-    }catch(e){
-      res.write(e.message);
-      res.sendStatus(400);
-    }
-  })
+app.delete("/api/shoppingcart/items", jsonParser, (req, res) => {
+  if (!req.session!.shoppingCart) {
+    req.session!.shoppingCart = new ShoppingCartModel();
+  }
+  var product: ProductRequest = req.body;
+  var shoppingCart: ShoppingCartModel = parseShoppinCart(
+    req.session!.shoppingCart
+  );
+  try {
+    shoppingCart.remove(product.id);
+    req.session!.shoppingCart = shoppingCart;
+    res.sendStatus(204);
+  } catch (e) {
+    res.write(e.message);
+    res.sendStatus(400);
+  }
+});
 
 app.get("/api/shoppingcart", (req, res) => {
   if (!req.session!.shoppingCart) {

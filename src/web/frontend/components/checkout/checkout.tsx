@@ -3,8 +3,9 @@ import Order from '../../../../lib/order';
 import CheckoutProperties from './checkoutProperties';
 import CheckoutState from './checkoutState';
 import Toast from 'react-bootstrap/Toast';
+import Router, { withRouter, RouteComponentProps } from 'react-router';
 
-export default class Checkout extends Component<CheckoutProperties,CheckoutState> {
+class Checkout extends Component<RouteComponentProps &CheckoutProperties,CheckoutState> {
     emailRef:any;
     firstnameRef:any;
     lastnameRef:any;
@@ -81,20 +82,23 @@ export default class Checkout extends Component<CheckoutProperties,CheckoutState
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(order)
-        }).then(res =>{
+        }).then(async res =>{
             if(res.ok){
-                this.props.onCartChange();
+                await this.props.onCartChange();
+                this.props.history.push('');
+                
             }else if(res.status == 400){
-                this.setState({showToast: true, toastMessage:"Inputerror please try again"})
+                this.setState({showToast: true,toastMessage: await res.text()})
             }else{
-                this.setState({showToast: true, toastMessage:"There was a problem submitting your data. Please try again in a moment."})
+                this.setState({showToast: true, toastMessage:""})
             }
         }).catch(err =>{
                 this.setState({showToast: true, toastMessage:"There was a problem submitting your data. Please try again in a moment."});
                 console.error(err);
         })
-        await this.props.onCartChange()
     }
 
 
 }
+
+export default withRouter(Checkout);

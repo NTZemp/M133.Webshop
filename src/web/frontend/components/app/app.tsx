@@ -14,12 +14,13 @@ import{ parseShoppinCart} from '../../../../lib/parsers';
 import ShoppingCartModel from '../../../../lib/shoppingCart'
 import ProductRequest from '../../../../lib/ProductRequest'
 import Checkout from '../checkout/checkout'
+import Toast from 'react-bootstrap/Toast';
 
 export default class app extends React.Component<AppProperties, AppState> {
   //https://www.freecodecamp.org/forum/t/returning-a-promise-value-from-fetch/200229/2
   constructor(props: Readonly<AppProperties>){
     super(props);
-    this.state =  {products:new Array<Product>(),shoppinCart:new ShoppingCartModel()};
+    this.state =  {products:new Array<Product>(),shoppinCart:new ShoppingCartModel(), showToast:false, toastMessage:""};
     this.refreshShoppingCart = this.refreshShoppingCart.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
@@ -57,7 +58,7 @@ export default class app extends React.Component<AppProperties, AppState> {
             <ProductDetailView addToCart={this.addToCart}/>
           </Route>
           <Route path='/checkout'>
-            <Checkout onCartChange={this.refreshShoppingCart}/>
+            <Checkout  onCartChange={this.refreshShoppingCart}/>
           </Route>
         </Switch>
       </main>
