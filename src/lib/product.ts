@@ -5,7 +5,8 @@ export default class Product {
   specialPrice?: number;
   description: string;
   imageName: string;
-  constructor() {
+
+  constructor(id?:number,price?:number, specialPrice?:number, name?:string,description?:string) {
     this.id = 1;
     this.name = "";
     this.description = "";
