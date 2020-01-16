@@ -14,7 +14,6 @@ import { parseShoppinCart } from "../../../../lib/parsers";
 import ShoppingCartModel from "../../../../lib/shoppingCart";
 import ProductRequest from "../../../../lib/ProductRequest";
 import Checkout from "../checkout/checkout";
-import Toast from "react-bootstrap/Toast";
 
 export default class app extends React.Component<AppProperties, AppState> {
   //https://www.freecodecamp.org/forum/t/returning-a-promise-value-from-fetch/200229/2
@@ -114,7 +113,6 @@ export default class app extends React.Component<AppProperties, AppState> {
     return response!.ok;
   }
 
-  async getCurrentPrice() {}
 
   async refreshShoppingCart() {
     await fetch("/api/shoppingCart")

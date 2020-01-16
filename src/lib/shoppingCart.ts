@@ -32,7 +32,6 @@ export default class ShoppingCartModel {
   getTotal(): number {
     let total: number = 0;
     this.items.forEach(item => {
-      console.log(JSON.stringify(item));
       total += item.getTotal();
     });
     return total;

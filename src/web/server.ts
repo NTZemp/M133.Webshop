@@ -67,7 +67,6 @@ app.post("/api/shoppingcart/checkout", jsonParser, (req, res) => {
     return;
   }
   var order = parseOrder(req.body);
-  console.log(order);
   if (order.isValid()) {
     req.session!.shoppingCart = null;
     res.sendStatus(204);

@@ -2,7 +2,6 @@ import React from "react";
 import Cookies from "universal-cookie";
 import ShoppingCartPreviewState from "./shoppingCartPreviewState";
 import ShoppingCartPreviewProperties from "./shoppingCartPreviewProperties";
-import "./shoppingCartPreview.style.css";
 import { Link } from "react-router-dom";
 
 export default class ShoppingCartPreview extends React.Component<
